@@ -5,3 +5,8 @@ lm_cache
 .idea
 
 *.egg-info/
+
+results
+scripts_test
+workspace
+trained_models*

@@ -48,6 +48,7 @@ def main():
     record_text = args.model_name + ':' + str(result_all) + '\n'
     with open('Record_All.txt','a') as f:
         f.write(record_text)
+    print(record_text)
     pass
 
 if __name__ == '__main__':

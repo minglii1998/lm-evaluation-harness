@@ -1,13 +1,15 @@
 #!/bin/bash
 
+#SBATCH --job-name=MMLU-2-Reflection_Alp_QA_13B_4p4de
 #SBATCH --time=48:00:00             #Set the wall clock limit to 1hr and 30min
 #SBATCH --ntasks=1                  #Request 1 task
 #SBATCH --ntasks-per-node=1         #Request 1 task/core per node
 #SBATCH --mem=64gb                 #Request 2560MB (2.5GB) per node
 #SBATCH --output=outlogging.%j      #Send stdout/err to "Example1Out.[jobID]"
 #SBATCH --gres=gpu:rtxa6000:2           #Request 1 GPU per node can be 1 or 2
-#SBATCH --partition=tron 
-#SBATCH --qos=medium
+#SBATCH --partition=scavenger
+#SBATCH --account=scavenger
+#SBATCH --qos=scavenger
 
 # modules needed for running DL jobs. Module restore will also work
 module add Python3/3.10.10
@@ -16,11 +18,11 @@ source /fs/nexus-scratch/minglii/venv/lm_eval/bin/activate
 cd /nfshomes/minglii/scratch/lm-evaluation-harness
 
 MODEL="hf-causal-experimental"
-MODEL_ARGS="pretrained=khalidsaifullaah/lca13,use_accelerate=True"
-BATCH_SIZE=1
+MODEL_ARGS="trained_models_fs/Reflection_Alp_QA_13B_4p4de,use_accelerate=True"
+BATCH_SIZE=4
 DEVICE="auto"
 NUM_FEWSHOT=5
-BASE_OUTPUT_PATH="results/llama2_13B_claude_alpaca/MMLU"
+BASE_OUTPUT_PATH="results/Reflection_Alp_QA_13B_4p4de/MMLU"
 
 export TRANSFORMERS_CACHE=/nfshomes/minglii/scratch/cache/
 declare -a TASKS=(
@@ -85,6 +87,13 @@ declare -a TASKS=(
 
 for TASK in "${TASKS[@]}"; do
     OUTPUT_PATH="$BASE_OUTPUT_PATH/$TASK.json"
+
+    # Check if OUTPUT_PATH exists
+    if [ -f "$OUTPUT_PATH" ]; then
+        echo "$OUTPUT_PATH exists. Skipping this task."
+        continue
+    fi
+    
     CMD="python main.py \
     --model $MODEL \
     --model_args $MODEL_ARGS \

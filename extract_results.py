@@ -28,13 +28,27 @@ def main():
 
     # Extract MMLU
     result_path_mmlu = os.path.join(result_path,'MMLU.json')
-    with open(result_path_mmlu, "r") as f:
-        data = json.load(f)
-    result_list = []
-    results = data['results']
-    for k in results.keys():
-        result_list.append(results[k]['acc_norm'])
-    result_mmlu = np.mean(result_list)
+    if os.path.exists(result_path_mmlu):
+        with open(result_path_mmlu, "r") as f:
+            data = json.load(f)
+        result_list = []
+        results = data['results']
+        for k in results.keys():
+            result_list.append(results[k]['acc_norm'])
+        result_mmlu = np.mean(result_list)
+    else:
+        result_path_mmlu = os.path.join(result_path,'MMLU')
+        json_files = [f for f in os.listdir(result_path_mmlu) if f.endswith('.json')]
+        result_list = []
+        for file in json_files:
+            json_path = os.path.join(result_path_mmlu,file)
+            with open(json_path, "r") as f:
+                data = json.load(f)
+
+            results = data['results']
+            for k in results.keys():
+                result_list.append(results[k]['acc_norm'])
+        result_mmlu = np.mean(result_list)
 
     # Extract TruthfulQA
     result_path_truth = os.path.join(result_path,'TruthfulQA.json')

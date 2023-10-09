@@ -18,7 +18,7 @@ source /fs/nexus-scratch/minglii/venv/lm_eval/bin/activate
 cd /nfshomes/minglii/scratch/lm-evaluation-harness
 
 MODEL="hf-causal-experimental"
-MODEL_ARGS="trained_models_fs/Reflection_Alp_QA_13B_4p4de,use_accelerate=True"
+MODEL_ARGS="pretrained=trained_models_fs/Reflection/Reflection_Alp_QA_13B_4p4de,use_accelerate=True"
 BATCH_SIZE=4
 DEVICE="auto"
 NUM_FEWSHOT=5

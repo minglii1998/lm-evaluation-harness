@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=MMLU-2-Reflection_Alp_QA_13B_4p4de
+#SBATCH --job-name=MMLU-2-ShareGPT_Reflection_Alp_QA_13B_4p4de
 #SBATCH --time=48:00:00             #Set the wall clock limit to 1hr and 30min
 #SBATCH --ntasks=1                  #Request 1 task
 #SBATCH --ntasks-per-node=1         #Request 1 task/core per node
@@ -18,11 +18,11 @@ source /fs/nexus-scratch/minglii/venv/lm_eval/bin/activate
 cd /nfshomes/minglii/scratch/lm-evaluation-harness
 
 MODEL="hf-causal-experimental"
-MODEL_ARGS="pretrained=trained_models_fs/Reflection/Reflection_Alp_QA_13B_4p4de,use_accelerate=True"
+MODEL_ARGS="pretrained=trained_models_fs/Reflection/ShareGPT_Reflection_Alp_QA_13B_4p4de,use_accelerate=True"
 BATCH_SIZE=4
 DEVICE="auto"
 NUM_FEWSHOT=5
-BASE_OUTPUT_PATH="results/Reflection_Alp_QA_13B_4p4de/MMLU"
+BASE_OUTPUT_PATH="results/ShareGPT_Reflection_Alp_QA_13B_4p4de/MMLU"
 
 export TRANSFORMERS_CACHE=/nfshomes/minglii/scratch/cache/
 declare -a TASKS=(

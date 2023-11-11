@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=HeARCllaSwag-Reflection_Alp_QA_13B_4p4de
+#SBATCH --job-name=HellaSwag-ShareGPT_WizrdLM_ALL_whole_Q_then_A_4096_13B_4p4de
 #SBATCH --time=36:00:00             #Set the wall clock limit to 1hr and 30min
 #SBATCH --ntasks=1                  #Request 1 task
 #SBATCH --ntasks-per-node=1         #Request 1 task/core per node
@@ -20,10 +20,10 @@ cd /nfshomes/minglii/scratch/lm-evaluation-harness
 export TRANSFORMERS_CACHE=/nfshomes/minglii/scratch/cache/
 python main.py \
     --model hf-causal-experimental \
-    --model_args pretrained=trained_models_fs/Reflection_Alp_QA_13B_4p4de,use_accelerate=True \
+    --model_args pretrained=trained_models_fs/Reflection/ShareGPT_WizrdLM_ALL_whole_Q_then_A_4096_13B_4p4de,use_accelerate=True \
     --tasks hellaswag \
     --batch_size 4 \
-    --output_path results/Reflection_Alp_QA_13B_4p4de/HellaSwag.json \
+    --output_path results/ShareGPT_WizrdLM_ALL_whole_Q_then_A_4096_13B_4p4de/HellaSwag.json \
     --no_cache \
     --device auto \
     --num_fewshot 10

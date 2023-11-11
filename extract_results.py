@@ -48,6 +48,7 @@ def main():
             results = data['results']
             for k in results.keys():
                 result_list.append(results[k]['acc_norm'])
+        assert(len(result_list) == 57) 
         result_mmlu = np.mean(result_list)
 
     # Extract TruthfulQA

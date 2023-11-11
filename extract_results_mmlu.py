@@ -39,6 +39,7 @@ def main():
             for k in results.keys():
                 result_list.append(results[k]['acc_norm'])
         result_mmlu = np.mean(result_list)
+        print(len(result_list))
         print(result_mmlu)
     pass
 
